@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>新卒向け 開発環境構築ガイド（章ページ）</title>
+<style>
+:root{
+  --primary:#1F3A5F; --accent:#C8553D; --text:#1A1A1A; --muted:#4A4A4A;
+  --bg:#FAFAF7; --surface:#FFFFFF; --line:#D9D9D2; --ok:#2E6B3F; --skip:#1F3A5F;
+  --radius:6px; --stroke:2;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;line-height:1.7;font-size:16px}
+main{max-width:880px;margin:0 auto;padding:32px 20px}
+.cover{border-bottom:4px solid var(--primary);padding-bottom:24px;margin-bottom:32px}
+.cover h1{color:var(--primary);font-size:1.9rem;margin:0 0 8px}
+.cover p{margin:0;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0 0;padding:0;list-style:none}
+.legend li{display:flex;align-items:center;gap:6px;font-size:.9rem}
+.badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:4px 12px;font-size:.85rem;font-weight:700;border:2px solid currentColor}
+.badge svg{width:18px;height:18px}
+.b-required{color:var(--accent)}
+.b-skip{color:var(--skip)}
+.b-done{color:var(--ok)}
+.chapter{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:28px;margin:0 0 32px;page-break-after:always}
+.chapter-head{display:flex;gap:16px;align-items:flex-start;border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:20px}
+.chapter-no{font-size:2.4rem;font-weight:800;color:var(--primary);line-height:1}
+.chapter-icon{width:40px;height:40px;color:var(--primary);flex:0 0 40px;margin-top:4px}
+.chapter-title{margin:0;font-size:1.4rem;color:var(--text)}
+.meta{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;margin:0 0 20px}
+.meta dt{font-weight:700;color:var(--primary)}
+.meta dd{margin:0}
+.steps{padding-left:1.4em}
+.steps li{margin-bottom:8px}
+.skip-box{border:2px dashed var(--skip);border-radius:var(--radius);padding:16px 18px;margin-top:20px;background:#F1F5FA}
+.skip-box h3{margin:0 0 8px;color:var(--skip);font-size:1.05rem;display:flex;gap:8px;align-items:center}
+.skip-box h3 svg{width:22px;height:22px}
+.skip-box ul{list-style:none;padding:0;margin:0}
+.skip-box li{margin:6px 0;display:flex;gap:8px}
+.skip-box li::before{content:"☐";font-size:1.1rem;line-height:1.4}
+.required-box{border:2px solid var(--accent);border-radius:var(--radius);padding:12px 16px;margin-top:20px;color:var(--accent);font-weight:700;display:flex;gap:8px;align-items:center}
+.required-box svg{width:22px;height:22px;flex:0 0 22px}
+.trouble{border-left:4px solid var(--accent);background:#FBF3F1;padding:12px 16px;margin-top:20px;border-radius:0 var(--radius) var(--radius) 0}
+code{background:#EEF1F5;padding:2px 6px;border-radius:4px;font-family:"Consolas","Menlo",monospace;font-size:.95em}
+pre{background:#1E2430;color:#F4F6FA;padding:12px 14px;border-radius:var(--radius);overflow-x:auto;font-size:.92rem}
+.note{color:var(--muted);font-size:.9rem}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding-top:16px;margin-top:40px}
+@media (max-width:600px){
+  main{padding:20px 14px}
+  .chapter{padding:20px 16px}
+  .chapter-no{font-size:1.9rem}
+  .meta{grid-template-columns:1fr}
+  .meta dt{margin-top:8px}
+}
+@media print{
+  body{background:#fff}
+  .chapter{border:none;box-shadow:none;page-break-inside:avoid}
+}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+</style>
+</head>
+<body>
+<main>
+
+<header class="cover">
+  <h1>新卒向け 開発環境構築ガイド</h1>
+  <p>1人で開発環境を整えるための章ページです。章ごとに「完了の目安」を確認して進んでください。</p>
+  <ul class="legend" aria-label="表示の見方">
+    <li><span class="badge b-required"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="12" y1="7" x2="12" y2="13"/><circle cx="12" cy="17" r="0.5" fill="currentColor"/></svg>必須</span> 必ず行う章</li>
+    <li><span class="badge b-skip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polyline points="10 8 14 12 10 16"/></svg>構築済みならスキップ可</span> 確認チェックがすべてはいなら飛ばせる</li>
+  </ul>
+</header>
+
+<!-- 01 -->
+<section class="chapter" id="ch01" aria-labelledby="t01">
+  <div class="chapter-head">
+    <div class="chapter-no">01</div>
+    <svg class="chapter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><polyline points="7 9 10 12 7 15"/><line x1="12" y1="15" x2="17" y2="15"/></svg>
+    <div>
+      <h2 class="chapter-title" id="t01">準備を確認する</h2>
+    </div>
+  </div>
+  <dl class="meta">
+    <dt>この章でやること</dt><dd>パソコンの状態と、必要なアカウントを確認します。</dd>
+    <dt>所要時間の目安</dt><dd>約15分</dd>
+    <dt>完了の目安</dt><dd>下の4項目がすべて「はい」になる</dd>
+  </dl>
+  <ol class="steps">
+    <li>Windowsの更新が完了しているか確認する（設定 → Windows Update）。</li>
+    <li>管理者として操作できるアカウントか確認する。できない場合は情報システム担当に相談する。</li>
+    <li>社内のアカウント（メール・社内サイト）でログインできることを確認する。</li>
+    <li>ディスクの空き容量が十分（目安：20GB以上）あるか確認する。</li>
+  </ol>
+  <div class="required-box">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="12" y1="7" x2="12" y2="13"/><circle cx="12" cy="17" r="0.5" fill="currentColor"/></svg>
+    必須：この章は飛ばせません。
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="chapter" id="ch02" aria-labelledby="t02">
+  <div class="chapter-head">
+    <div class="chapter-no">02</div>
+    <svg class="chapter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="8 7 3 12 8 17"/><polyline points="16 7 21 12 16 17"/><line x1="14" y1="4" x2="10" y2="20"/></svg>
+    <div>
+      <h2 class="chapter-title" id="t02">エディタ（VSCode）を入れる</h2>
+    </div>
+  </div>
+  <dl class="meta">
+    <dt>この章でやること</dt><dd>文字を書いて編集するためのエディタ（VSCode）をインストールします。</dd>
+    <dt>所要時間の目安</dt><dd>約15分</dd>
+    <dt>完了の目安</dt><dd>VSCodeが起動し、左側にメニューが表示される</dd>
+  </dl>
+  <ol class="steps">
+    <li>公式サイトからWindows版のインストーラーをダウンロードする。</li>
+    <li>インストーラーを実行し、表示される項目は既定のまま進める。</li>
+    <li>インストール後、VSCodeを起動して画面が表示されることを確認する。</li>
+  </ol>
+  <div class="skip-box">
+    <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polyline points="10 8 14 12 10 16"/></svg>構築済みの方はスキップ可</h3>
+    <ul>
+      <li>VSCodeが起動する</li>
+      <li>日本語の表示が崩れていない</li>
+      <li>拡張機能の画面（左側の四角いアイコン）を開ける</li>
+    </ul>
+    <p class="note">すべて「はい」なら次の章へ進んでください。1つでも「いいえ」なら、この章を行ってください。</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="chapter" id="ch03" aria-labelledby="t03">
+  <div class="chapter-head">
+    <div class="chapter-no">03</div>
+    <svg class="chapter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="3" x2="12" y2="15"/><polyline points="7 10 12 15 17 10"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+    <div>
+      <h2 class="chapter-title" id="t03">Gitを入れて設定する</h2>
+    </div>
+  </div>
+  <dl class="meta">
+    <dt>この章でやること</dt><dd>変更履歴を管理するGitをインストールし、名前とメールアドレスを設定します。</dd>
+    <dt>所要時間の目安</dt><dd>約20分</dd>
+    <dt>完了の目安</dt><dd>ターミナルで <code>git --version</code> と入力し、バージョンが表示される</dd>
+  </dl>
+  <ol class="steps">
+    <li>公式サイトからWindows版のGitをダウンロードし、インストールする（項目は既定のまま）。</li>
+    <li>VSCodeのターミナルを開き、<code>git --version</code> と入力して Enter を押す。</li>
+    <li>次の2行で、自分の名前とメールアドレスを設定する（<code>&lt;名前&gt;</code> などは自分の情報に置き換える）。</li>
+  </ol>
+  <pre><code>git config --global user.name "&lt;名前&gt;"
+git config --global user.email "&lt;メールアドレス&gt;"</code></pre>
+  <div class="skip-box">
+    <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polyline points="10 8 14 12 10 16"/></svg>構築済みの方はスキップ可</h3>
+    <ul>
+      <li><code>git --version</code> でバージョンが表示される</li>
+      <li><code>git config --global user.name</code> で自分の名前が表示される</li>
+    </ul>
+    <p class="note">すべて「はい」なら次の章へ進んでください。</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="chapter" id="ch04" aria-labelledby="t04">
+  <div class="chapter-head">
+    <div class="chapter-no">04</div>
+    <svg class="chapter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><polyline points="7 9 10 12 7 15"/><line x1="12" y1="15" x2="17" y2="15"/></svg>
+    <div>
+      <h2 class="chapter-title" id="t04">Dockerを動かす</h2>
+    </div>
+  </div>
+  <dl class="meta">
+    <dt>この章でやること</dt><dd>コンテナを動かす仕組み（Docker）を準備し、動作を確認します。</dd>
+    <dt>所要時間の目安</dt><dd>約30分（初回の起動には時間がかかります）</dd>
+    <dt>完了の目安</dt><dd>ターミナルで <code>docker run hello-world</code> を実行し、「Hello from Docker!」が表示される</dd>
+  </dl>
+  <ol class="steps">
+    <li>公式サイトからDocker Desktopをダウンロードし、インストールする。</li>
+    <li>インストール後、Docker Desktopを起動し、表示が「実行中」になるまで待つ。</li>
+    <li>ターミナルで <code>docker run hello-world</code> を実行する。</li>
+  </ol>
+  <pre><code>docker run hello-world</code></pre>
+  <div class="trouble">
+    <strong>「Cannot connect to the Docker daemon」と出た場合：</strong>Docker Desktopが起動しているか確認してください。起動直後は数分待つ必要があります。
+  </div>
+  <div class="skip-box">
+    <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polyline points="10 8 14 12 10 16"/></svg>構築済みの方はスキップ可</h3>
+    <ul>
+      <li><code>docker run hello-world</code> が成功する</li>
+      <li>Docker Desktopが社内ルールに沿った設定になっている（不明な場合は担当者へ確認）</li>
+    </ul>
+    <p class="note">すべて「はい」なら次の章へ進んでください。</p>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="chapter" id="ch05" aria-labelledby="t05">
+  <div class="chapter-head">
+    <div class="chapter-no">05</div>
+    <svg class="chapter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polyline points="8 12.5 11 15.5 16 9.5"/></svg>
+    <div>
+      <h2 class="chapter-title" id="t05">動作確認をする</h2>
+    </div>
+  </div>
+  <dl class="meta">
+    <dt>この章でやること</dt><dd>ここまでの環境が正しく動くかを、まとめて確認します。</dd>
+    <dt>所要時間の目安</dt><dd>約10分</dd>
+    <dt>完了の目安</dt><dd>下の3つのコマンドがすべて成功する</dd>
+  </dl>
+  <ol class="steps">
+    <li>ターミナルで <code>code --version</code> を実行する（VSCodeのコマンド）。</li>
+    <li><code>git --version</code> を実行する。</li>
+    <li><code>docker --version</code> を実行する。</li>
+  </ol>
+  <pre><code>code --version
+git --version
+docker --version</code></pre>
+  <div class="required-box">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="12" y1="7" x2="12" y2="13"/><circle cx="12" cy="17" r="0.5" fill="currentColor"/></svg>
+    必須：この章は飛ばせません。3つすべてが成功したら完了です。
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="chapter" id="ch06" aria-labelledby="t06">
+  <div class="chapter-head">
+    <div class="chapter-no">06</div>
+    <svg class="chapter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 4.3 2.6 17.6A2 2 0 0 0 4.3 20.6h15.4a2 2 0 0 0 1.7-3L13.7 4.3a2 2 0 0 0-3.4 0z"/><line x1="12" y1="10" x2="12" y2="14"/><circle cx="12" cy="17.5" r="0.5" fill="currentColor"/></svg>
+    <div>
+      <h2 class="chapter-title" id="t06">困ったときは</h2>
+    </div>
+  </div>
+  <p>エラーが出たら、まず次を確認してください。</p>
+  <ol class="steps">
+    <li>エラーメッセージの全文を控える（一部だけでは原因が分かりにくいため）。</li>
+    <li>どの章のどの手順で起きたかを確認する。</li>
+    <li>その章の「完了の目安」が満たされているかを確認する。</li>
+    <li>解決しない場合は、エラー全文と実行したコマンドを添えて担当者に相談する。</li>
+  </ol>
+  <p class="note">焦らなくて大丈夫です。エラーは環境構築でよく起きることで、確認の手順を一つずつ進めれば解決できます。</p>
+</section>
+
+<footer>
+  <p>※ 本ガイドの手順は作成時点の一般的な操作です。インストーラーの画面や社内ルールが異なる場合は、担当者の指示を優先してください。</p>
+</footer>
+
+</main>
+</body>
+</html>
